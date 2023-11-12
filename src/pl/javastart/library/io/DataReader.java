@@ -25,4 +25,7 @@ public class DataReader {
         sc.nextLine();
         return new Book(title, author, releaseDate, pages, publisher,isbn);
     }
+    public void close(){
+        sc.close();
+    }
 }
