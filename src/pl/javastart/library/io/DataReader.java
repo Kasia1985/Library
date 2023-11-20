@@ -47,6 +47,6 @@ public class DataReader {
         int month = getInt();
         System.out.println("day:");
         int day = getInt();
-        return new Magazine(title, publisher, language, year, month , day);
+        return new Magazine(title, publisher, language, year, month, day);
     }
 }

@@ -1,11 +1,11 @@
 package pl.javastart.library.model;
 
-public class Book extends Publication{
+public class Book extends Publication {
     private String author;
     private int pages;
     private String isbn;
 
-    public Book(String title, String author, int year, int pages, String publisher, String isbn){
+    public Book(String title, String author, int year, int pages, String publisher, String isbn) {
         super(title, publisher, year);
         this.author = author;
         this.pages = pages;
@@ -37,9 +37,10 @@ public class Book extends Publication{
         this.isbn = isbn;
     }
 
+    @Override
     public void printInfo() {
-        String info = getTitle() + ", " + author + ", " +getYear() + ", " +pages + ", " +getPublisher() ;
-        if (isbn != null){
+        String info = getTitle() + ", " + author + ", " + getYear() + ", " + pages + ", " + getPublisher();
+        if (isbn != null) {
             info += ", " + isbn;
         }
         System.out.println(info);
