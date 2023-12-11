@@ -1,8 +1,12 @@
 package pl.javastart.library.app;
 
-import pl.javastart.library.app.exception.NoSuchOptionException;
+import pl.javastart.library.exception.DataExportException;
+import pl.javastart.library.exception.DataImportException;
+import pl.javastart.library.exception.NoSuchOptionException;
 import pl.javastart.library.io.ConsolePrinter;
 import pl.javastart.library.io.DataReader;
+import pl.javastart.library.io.file.FileManager;
+import pl.javastart.library.io.file.FileManagerBuilder;
 import pl.javastart.library.model.Book;
 import pl.javastart.library.model.Library;
 import pl.javastart.library.model.Magazine;
@@ -13,9 +17,22 @@ import java.util.InputMismatchException;
 public class LibraryControl {
     private ConsolePrinter printer = new ConsolePrinter();
     private DataReader dataReader = new DataReader(printer);
-    private Library library = new Library();
+    private FileManager fileManager;
+    private Library library;
 
-    public void controlLoop() {
+    LibraryControl() {
+        fileManager = new FileManagerBuilder(printer, dataReader).build();
+        try {
+            library = fileManager.importData();
+            printer.printLine("Imported data from a file");
+        } catch (DataImportException e) {
+            printer.printLine(e.getMessage());
+            printer.printLine("A new database has been initiated.");
+            library = new Library();
+        }
+    }
+
+    void controlLoop() {
         Option option;
         do {
             printOption();
@@ -59,6 +76,12 @@ public class LibraryControl {
     }
 
     private void exit() {
+        try {
+            fileManager.exportData(library);
+            printer.printLine("Data export to file successfully completed");
+        }catch(DataExportException e){
+            printer.printLine(e.getMessage());
+        }
         printer.printLine("End of program");
         dataReader.close();
     }
@@ -126,8 +149,8 @@ public class LibraryControl {
         static Option createFromInt(int option) throws NoSuchOptionException {
             try {
                 return Option.values()[option];
-            } catch (ArrayIndexOutOfBoundsException e){
-                throw new NoSuchOptionException("No option with ID "+ option);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new NoSuchOptionException("No option with ID " + option);
 
             }
         }

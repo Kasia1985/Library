@@ -25,6 +25,10 @@ public class DataReader {
         }
     }
 
+    public String getString(){
+            return sc.nextLine();
+    }
+
     public Book readAndCreateBook() {
         printer.printLine("Title:");
         String title = sc.nextLine();
