@@ -100,7 +100,7 @@ public class LibraryControl {
     private void addMagazine() {
         try {
             Magazine magazine = dataReader.readAndCreateMagazine();
-            library.addMagazine(magazine);
+            library.addPublication(magazine);
         } catch (InputMismatchException e) {
             printer.printLine("Failed to create magazine, incorrect data");
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -111,7 +111,7 @@ public class LibraryControl {
     private void addBook() {
         try {
             Book book = dataReader.readAndCreateBook();
-            library.addBook(book);
+            library.addPublication(book);
         } catch (InputMismatchException e) {
             printer.printLine("Failed to create book, incorrect data");
         } catch (ArrayIndexOutOfBoundsException e) {

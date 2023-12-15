@@ -4,43 +4,45 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public abstract class Publication implements Serializable {
-    private int year;
     private String title;
     private String publisher;
+    private int year;
 
-    public Publication(String title, String publisher, int year) {
+    Publication(String title, String publisher, int year) {
         this.title = title;
         this.publisher = publisher;
         this.year = year;
     }
 
-    public int getYear() {
+    int getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    void setYear(int year) {
         this.year = year;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    void setTitle(String title) {
         this.title = title;
     }
 
-    public String getPublisher() {
+    String getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    void setPublisher(String publisher) {
         this.publisher = publisher;
     }
 
+    public abstract String toCsv();
+
     @Override
     public String toString() {
-        return title + "; " + publisher + "; " + year + "; ";
+        return title + ", " + publisher + ", " + year;
     }
 
     @Override
@@ -55,6 +57,6 @@ public abstract class Publication implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(year, title, publisher);
+        return Objects.hash(title, publisher, year);
     }
 }
