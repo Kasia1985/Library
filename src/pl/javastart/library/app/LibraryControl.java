@@ -50,6 +50,12 @@ public class LibraryControl {
                 case PRINT_MAGAZINES:
                     printMagazines();
                     break;
+                case DELETE_BOOK:
+                    deleteBook();
+                    break;
+                case DELETE_MAGAZINE:
+                    deleteMagazine();
+                    break;
                 case EXIT:
                     exit();
                     break;
@@ -58,6 +64,7 @@ public class LibraryControl {
             }
         } while (option != Option.EXIT);
     }
+
 
     private Option getOption() {
         boolean optionOk = false;
@@ -79,7 +86,7 @@ public class LibraryControl {
         try {
             fileManager.exportData(library);
             printer.printLine("Data export to file successfully completed");
-        }catch(DataExportException e){
+        } catch (DataExportException e) {
             printer.printLine(e.getMessage());
         }
         printer.printLine("End of program");
@@ -108,6 +115,18 @@ public class LibraryControl {
         }
     }
 
+    private void deleteMagazine() {
+        try {
+            Magazine magazine = dataReader.readAndCreateMagazine();
+            if (library.removePublication(magazine))
+                printer.printLine("magazine removed");
+            else
+                printer.printLine("no specified magazine");
+        } catch (InputMismatchException e) {
+            printer.printLine("Failed to delete the magazine, incorrect data");
+        }
+    }
+
     private void addBook() {
         try {
             Book book = dataReader.readAndCreateBook();
@@ -116,6 +135,18 @@ public class LibraryControl {
             printer.printLine("Failed to create book, incorrect data");
         } catch (ArrayIndexOutOfBoundsException e) {
             printer.printLine("The capacity limit has been reached and another book cannot be added");
+        }
+    }
+
+    private void deleteBook() {
+        try {
+            Book book = dataReader.readAndCreateBook();
+            if (library.removePublication(book))
+                printer.printLine("book removed");
+            else
+                printer.printLine("no specified book");
+        } catch (InputMismatchException e) {
+            printer.printLine("Failed to delete the book, incorrect data");
         }
     }
 
@@ -131,7 +162,9 @@ public class LibraryControl {
         ADD_BOOK(1, "add new Book"),
         ADD_MAGAZINE(2, "add new Magazine"),
         PRINT_BOOKS(3, "show available books"),
-        PRINT_MAGAZINES(4, "show available magazine");
+        PRINT_MAGAZINES(4, "show available magazine"),
+        DELETE_BOOK(5, "delete book"),
+        DELETE_MAGAZINE(6, "delete magazine");
 
         private final int value;
         private final String description;
