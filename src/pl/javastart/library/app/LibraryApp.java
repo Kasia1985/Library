@@ -1,7 +1,7 @@
 package pl.javastart.library.app;
 
 public class LibraryApp {
-    final static String APP_NAME = "Library v1.9";
+    final static String APP_NAME = "Library v2.0";
 
     public static void main(String[] args) {
 
